@@ -1,0 +1,16 @@
+{
+  "extends": "./packages/config/tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@piece/ui": ["./packages/ui/src"],
+      "@piece/config": ["./packages/config/src"]
+    }
+  },
+  "files": [],
+  "references": [
+    { "path": "./apps/mobile" },
+    { "path": "./packages/ui" },
+    { "path": "./packages/config" }
+  ]
+}

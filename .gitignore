@@ -1,0 +1,81 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+*.lcov
+.nyc_output
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+.expo/
+.expo-shared/
+
+# Environment
+.env
+.env*.local
+.dev.vars
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.sublime-*
+
+# Temporary
+tmp/
+temp/
+*.tmp
+
+# PM2
+.pm2/
+pids/
+*.pid
+*.seed
+
+# Backup
+*.backup
+*.bak
+*.tar.gz
+*.zip
+
+# Supabase
+.supabase/
+
+# React Native
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Metro
+.metro-health-check*
+
+# Secrets
+secrets/
+*.pem
