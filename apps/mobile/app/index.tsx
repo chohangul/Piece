@@ -1,29 +1,11 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useEffect } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
-export default function IndexScreen() {
-  const router = useRouter();
-
-  useEffect(() => {
-    console.log('Index screen loaded successfully!');
-  }, []);
-
-  const handleGetStarted = () => {
-    console.log('Navigating to login...');
-    router.push('/(auth)/login');
-  };
-
+export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>🎯 Piece</Text>
-      <Text style={styles.subtitle}>퍼즐 조각처럼 만나는 소셜 앱</Text>
-      
-      <TouchableOpacity style={styles.button} onPress={handleGetStarted}>
-        <Text style={styles.buttonText}>시작하기</Text>
-      </TouchableOpacity>
-      
-      <Text style={styles.debug}>✅ App loaded successfully!</Text>
+      <Text style={styles.title}>✅ Piece App Works!</Text>
+      <Text style={styles.subtitle}>최소 버전 테스트 성공</Text>
+      <Text style={styles.info}>이 화면이 보이면 앱이 정상 작동하는 것입니다.</Text>
     </View>
   );
 }
@@ -37,30 +19,19 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 48,
+    fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
+    color: '#0f0',
   },
   subtitle: {
-    fontSize: 18,
+    fontSize: 20,
+    marginBottom: 10,
+    color: '#333',
+  },
+  info: {
+    fontSize: 14,
     color: '#666',
-    marginBottom: 50,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    paddingHorizontal: 40,
-    paddingVertical: 15,
-    borderRadius: 10,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  debug: {
-    position: 'absolute',
-    bottom: 50,
-    fontSize: 12,
-    color: '#0f0',
+    textAlign: 'center',
   },
 });
