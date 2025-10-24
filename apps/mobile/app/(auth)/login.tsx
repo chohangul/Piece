@@ -4,12 +4,10 @@ import { useRouter } from 'expo-router';
 import { useAuthStore } from '@/stores/auth-store';
 
 export default function LoginScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const router = useRouter();
-  const signIn = useAuthStore((state) => state.signIn);
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -18,61 +16,61 @@ export default function LoginScreen() {
     }
 
     try {
-      setIsLoading(true);
-      await signIn(email, password);
+      setLoading(true);
+      console.log('Attempting login...');
+      
+      // Auth store의 signIn 직접 호출
+      await useAuthStore.getState().signIn(email, password);
+      
+      console.log('Login successful');
+      Alert.alert('성공', '로그인되었습니다!');
       router.replace('/(main)/home');
     } catch (error: any) {
+      console.error('Login error:', error);
       Alert.alert('로그인 실패', error.message || '로그인에 실패했습니다.');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Piece</Text>
-        <Text style={styles.subtitle}>조각으로 만나는 새로운 연결</Text>
+      <Text style={styles.title}>로그인</Text>
+      
+      <TextInput
+        style={styles.input}
+        placeholder="이메일"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        keyboardType="email-address"
+      />
+      
+      <TextInput
+        style={styles.input}
+        placeholder="비밀번호"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      
+      <TouchableOpacity 
+        style={[styles.button, loading && styles.buttonDisabled]} 
+        onPress={handleLogin}
+        disabled={loading}
+      >
+        <Text style={styles.buttonText}>
+          {loading ? '로그인 중...' : '로그인'}
+        </Text>
+      </TouchableOpacity>
 
-        <View style={styles.form}>
-          <TextInput
-            style={styles.input}
-            placeholder="이메일"
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
-            keyboardType="email-address"
-            editable={!isLoading}
-          />
+      <TouchableOpacity onPress={() => router.push('/(auth)/signup')}>
+        <Text style={styles.link}>회원가입</Text>
+      </TouchableOpacity>
 
-          <TextInput
-            style={styles.input}
-            placeholder="비밀번호"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            editable={!isLoading}
-          />
-
-          <TouchableOpacity
-            style={[styles.button, styles.primaryButton]}
-            onPress={handleLogin}
-            disabled={isLoading}
-          >
-            <Text style={styles.buttonText}>
-              {isLoading ? '로그인 중...' : '로그인'}
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.button, styles.secondaryButton]}
-            onPress={() => router.push('/(auth)/signup')}
-            disabled={isLoading}
-          >
-            <Text style={styles.secondaryButtonText}>회원가입</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <TouchableOpacity onPress={() => router.push('/(main)/home')}>
+        <Text style={styles.skipLink}>건너뛰기 (테스트용)</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -80,61 +78,49 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    padding: 20,
     backgroundColor: '#fff',
   },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 24,
-  },
   title: {
-    fontSize: 48,
+    fontSize: 32,
     fontWeight: 'bold',
+    marginBottom: 40,
     textAlign: 'center',
-    marginBottom: 8,
-    color: '#1a1a1a',
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: '#666',
-    marginBottom: 48,
-  },
-  form: {
-    gap: 16,
   },
   input: {
-    height: 56,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
-    borderRadius: 12,
-    paddingHorizontal: 16,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 15,
+    marginBottom: 15,
     fontSize: 16,
-    backgroundColor: '#f8f8f8',
   },
   button: {
-    height: 56,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  primaryButton: {
     backgroundColor: '#007AFF',
-    marginTop: 8,
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
   },
-  secondaryButton: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: '#007AFF',
+  buttonDisabled: {
+    backgroundColor: '#ccc',
   },
   buttonText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
-  secondaryButtonText: {
+  link: {
     color: '#007AFF',
+    textAlign: 'center',
+    marginTop: 20,
     fontSize: 16,
-    fontWeight: '600',
+  },
+  skipLink: {
+    color: '#999',
+    textAlign: 'center',
+    marginTop: 10,
+    fontSize: 14,
   },
 });
