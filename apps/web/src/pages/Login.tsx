@@ -8,8 +8,15 @@ export default function LoginPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
-    alert(`로그인 시도: ${email}`)
-    // 실제 로그인 로직은 나중에 추가
+    
+    // 테스트용 계정
+    if (email === 'test@piece.app' && password === 'test1234') {
+      alert('✅ 로그인 성공! (테스트 모드)')
+      localStorage.setItem('isLoggedIn', 'true')
+      navigate('/')
+    } else {
+      alert('❌ 로그인 실패\n\n테스트 계정:\nEmail: test@piece.app\nPassword: test1234')
+    }
   }
 
   return (
@@ -43,6 +50,12 @@ export default function LoginPage() {
       <button onClick={() => navigate('/')} style={styles.backButton}>
         뒤로 가기
       </button>
+
+      <div style={styles.testInfo}>
+        <p style={styles.testTitle}>🧪 테스트 계정</p>
+        <p style={styles.testText}>Email: test@piece.app</p>
+        <p style={styles.testText}>Password: test1234</p>
+      </div>
     </div>
   )
 }
@@ -94,5 +107,22 @@ const styles = {
     fontSize: '16px',
     cursor: 'pointer',
     marginTop: '20px',
+  },
+  testInfo: {
+    marginTop: '40px',
+    padding: '20px',
+    backgroundColor: '#f0f0f0',
+    borderRadius: '10px',
+    textAlign: 'center' as const,
+  },
+  testTitle: {
+    fontSize: '16px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+  },
+  testText: {
+    fontSize: '14px',
+    color: '#666',
+    margin: '5px 0',
   },
 }
