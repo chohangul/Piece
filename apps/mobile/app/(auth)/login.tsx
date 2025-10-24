@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useAuthStore } from '@/stores/auth-store';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -19,7 +18,8 @@ export default function LoginScreen() {
       setLoading(true);
       console.log('Attempting login...');
       
-      // Auth store의 signIn 직접 호출
+      // Dynamic import to avoid loading auth-store at module level
+      const { useAuthStore } = await import('@/stores/auth-store');
       await useAuthStore.getState().signIn(email, password);
       
       console.log('Login successful');
